@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import render_template
-from flask import request,jsonify, abort, json
+from flask import request
 
 from classes.controller.naverController import NaverController
 
@@ -16,11 +16,6 @@ def index():
 def crawler_naver():
     controller = NaverController()
     return render_template('/naver/include/naver.html', data=controller.getNewsList(request))
-
-@app.route('/test')
-def index2():
-    controller = NaverController()
-    return jsonify(controller.getNewsList(request))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
