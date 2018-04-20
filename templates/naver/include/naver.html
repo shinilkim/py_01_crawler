@@ -1,0 +1,122 @@
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#tab_001" aria-controls="tab_001" role="tab" data-toggle="tab">실시간 뉴스 토픽</a></li>
+    <li role="presentation"><a href="#tab_002" aria-controls="tab_002" role="tab" data-toggle="tab">많이 본 뉴스:섹션</a></li>
+    <li role="presentation"><a href="#tab_003" aria-controls="tab_003" role="tab" data-toggle="tab">많이 본 뉴스:성별</a></li>
+    <li role="presentation"><a href="#tab_004" aria-controls="tab_004" role="tab" data-toggle="tab">많이 본 뉴스:연령별</a></li>
+</ul>
+
+<div class="tab-content" style="padding-top:4px;">
+    <div role="tabpanel" class="tab-pane active" id="tab_001">
+        <table class="table table-bordered table-hover table-striped" id="tbl_001" width="100%" style="font-size:12px;font-family:굴림체;">
+            <thead>
+                <tr>
+                    <th>순위</th>
+                    <th>제목</th>
+                </tr>
+            </thead>
+            <tbody>
+            {%  for row in data.topic %}
+                <tr>
+                    <td>{{ row.rank }}</td>
+                    <td><a href="{{ row.url }}" target="_blank">{{ row.title }}</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="tab_002">
+        <table class="table table-bordered table-hover table-striped" id="tbl_002" width="100%" style="font-size:12px;font-family:굴림체;">
+            <thead>
+                <tr>
+                    <th>섹션</th>
+                    <th>순위</th>
+                    <th>제목</th>
+                    <th>조회수</th>
+                    <th>이미지</th>
+                </tr>
+            </thead>
+            <tbody>
+            {%  for row in data.section %}
+                {%  for rs in row.news %}
+                <tr>
+                    <td>{{ row.title }}</td>
+                    <td>{{ rs.rank }}</td>
+                    <td><a href="{{ rs.url }}" target="_blank">{{ rs.title }}</a></td>
+                    <td>{{ rs.count }}</td>
+                    <td><img src="{{ rs.img }}" height="30" width="30"></td>
+                </tr>
+                {% endfor %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="tab_003">
+        <table class="table table-bordered table-hover table-striped" id="tbl_003" width="100%" style="font-size:12px;font-family:굴림체;">
+            <thead>
+                <tr>
+                    <th>섹션</th>
+                    <th>순위</th>
+                    <th>제목</th>
+                    <th>조회수</th>
+                    <th>이미지</th>
+                </tr>
+            </thead>
+            <tbody>
+            {%  for row in data.sex %}
+                {%  for rs in row.news %}
+                <tr>
+                    <td>{{ row.title }}</td>
+                    <td>{{ rs.rank }}</td>
+                    <td><a href="{{ rs.url }}" target="_blank">{{ rs.title }}</a></td>
+                    <td>{{ rs.count }}</td>
+                    <td><img src="{{ rs.img }}" height="30" width="30"></td>
+                </tr>
+                {% endfor %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="tab_004">
+        <table class="table table-bordered table-hover table-striped" id="tbl_004" width="100%" style="font-size:12px;font-family:굴림체;">
+            <thead>
+                <tr>
+                    <th>섹션</th>
+                    <th>순위</th>
+                    <th>제목</th>
+                    <th>조회수</th>
+                    <th>이미지</th>
+                </tr>
+            </thead>
+            <tbody>
+            {%  for row in data.age %}
+                {%  for rs in row.news %}
+                <tr>
+                    <td>{{ row.title }}</td>
+                    <td>{{ rs.rank }}</td>
+                    <td><a href="{{ rs.url }}" target="_blank">{{ rs.title }}</a></td>
+                    <td>{{ rs.count }}</td>
+                    <td><img src="{{ rs.img }}" height="30" width="30"></td>
+                </tr>
+                {% endfor %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+$(document).ready(function() {
+    $("#tbl_001,#tbl_002,#tbl_003,#tbl_004").DataTable({
+        paging:false,
+        //scrollY:400,
+        searching: true,
+        ordering: true,
+        info: false
+    });
+});
+
+$("#div_time").text("{{ data.date }}".substring(0,19));
+
+</script>

@@ -1,0 +1,9 @@
+pip install Flask
+pip install bs4
+
+
+##############################
+# pip 명령어
+##############################
+# 01 설치된 package 보기
+pip list --format=columns
