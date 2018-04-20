@@ -1,6 +1,14 @@
+1) python 3.x 설치
+
+2) library 설치
 pip install Flask
 pip install bs4
 
+3) 서버 구동
+${HOME}# python app.py
+
+4) 브라우저로 접속
+http://localhost:5000
 
 ##############################
 # pip 명령어
