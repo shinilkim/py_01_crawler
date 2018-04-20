@@ -81,7 +81,7 @@ class NaverService:
             "news": Util.getInfo(ranks)
         })
         # 04. 연령별 > 50대 이상
-        html = Util.getHtml('http://m.news.naver.com/rankingList.nhn?type=age&typeValue=30')
+        html = Util.getHtml('http://m.news.naver.com/rankingList.nhn?type=age&typeValue=50')
         ranks = html.find("div", {"class": "news", "id": "ct"}).find("div", {"class": "ranking_news"})
         list.append({
             "title": '50대 이상',
