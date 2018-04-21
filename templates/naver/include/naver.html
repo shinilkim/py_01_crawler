@@ -53,13 +53,13 @@
     </div>
 
     <div role="tabpanel" class="tab-pane" id="tab_002">
-        <table class="table table-bordered table-hover table-striped" id="tbl_002" width="100%" style="font-size:12px;font-family:굴림체;">
+        <table class="table table-bordered table-hover table-striped display compact" id="tbl_002" width="100%" style="font-size:12px;font-family:굴림체;">
             <colgroup>
-                <col width="70"/>
-                <col width="70"/>
-                <col/>
-                <col width="80"/>
-                <col width="80"/>
+                <col data-name="연령" width="70"/>
+                <col data-name="순위" width="70"/>
+                <col data-name="제목" />
+                <col data-name="조회수" width="80"/>
+                <col data-name="이미지" width="80"/>
             </colgroup>
             <thead>
                 <tr>
@@ -83,6 +83,15 @@
                 {% endfor %}
             {% endfor %}
             </tbody>
+            <tfoot>
+                <tr>
+                    <th>섹션</th>
+                    <th>순위</th>
+                    <th>제목</th>
+                    <th>조회수</th>
+                    <th>이미지</th>
+                </tr>
+            </tfoot>
         </table>
     </div>
 
@@ -123,11 +132,11 @@
     <div role="tabpanel" class="tab-pane" id="tab_004">
         <table class="table table-bordered table-hover table-striped" id="tbl_004" width="100%" style="font-size:12px;font-family:굴림체;">
             <colgroup>
-                <col width="80"/>
-                <col width="70"/>
-                <col/>
-                <col width="80"/>
-                <col width="80"/>
+                <col data-name="연령" width="80"/>
+                <col data-name="순위" width="70"/>
+                <col data-name="제목" />
+                <col data-name="조회수" width="80"/>
+                <col data-name="이미지" width="80"/>
             </colgroup>
             <thead>
                 <tr>
@@ -156,12 +165,42 @@
 </div>
 <script>
 $(document).ready(function() {
-    $("#tbl_002,#tbl_003,#tbl_004").DataTable({
+    $("#tbl_003,#tbl_004").DataTable({
         paging:false,
         //scrollY:400,
         searching: true,
         ordering: true,
         info: false
+    });
+    var tbl_002 = $("#tbl_002").DataTable({
+        paging:false,
+        //scrollY:400,
+        searching: true,
+        ordering: true,
+        info: false
+    });
+
+    // 하단 조회
+    $('#tbl_002 tfoot th').each( function () {
+        var title = $(this).text();
+        var width = 0;
+        $.each($("#tbl_002 > colgroup > col"), function(idx, rs){
+            rs = $(rs);
+            if( rs.data('name') == title ) {
+                width = rs.attr('width');
+            }
+        });
+        if( "순위-제목".indexOf(title) > -1 ) {
+            $(this).html( '<input type="text" style="width:'+width+'px" class="form-control input-sm" placeholder="'+title+'" />' );
+        }
+    });
+    eval('tbl_002').columns().every( function () {
+        var that = this;
+        $( 'input', this.footer() ).on( 'keyup change', function () {
+            if ( that.search() !== this.value ) {
+                that.search( this.value ).draw();
+            }
+        } );
     });
 });
 
