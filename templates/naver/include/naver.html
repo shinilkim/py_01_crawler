@@ -7,26 +7,49 @@
 
 <div class="tab-content" style="padding-top:4px;">
     <div role="tabpanel" class="tab-pane active" id="tab_001">
-        <table class="table table-bordered table-hover table-striped" id="tbl_001" width="100%" style="font-size:12px;font-family:굴림체;">
-            <colgroup>
-                <col width="70"/>
-                <col/>
-            </colgroup>
-            <thead>
-                <tr>
-                    <th>순위</th>
-                    <th>제목</th>
-                </tr>
-            </thead>
-            <tbody>
-            {%  for row in data.topic %}
-                <tr>
-                    <td>{{ row.rank }}</td>
-                    <td><a href="{{ row.url }}" target="_blank">{{ row.title }}</a></td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+        <div class="col-sm-6">
+            <h3>뉴스 토픽</h3>
+            <table class="table table-hover" id="tbl_001" style="font-size:12px;font-family:굴림체;">
+                <colgroup>
+                    <col width="20"/>
+                    <col width="40"/>
+                    <col/>
+                </colgroup>
+                <tbody>
+                {%  for row in data.topic %}
+                {% if row.mode == 'news' %}
+                    <tr>
+                        <td><span class="rank_number">{{ row.rank }}</span></td>
+                        <td><span class="rank_new">{{ row.new }}</span></td>
+                        <td><a href="{{ row.url }}" target="_blank">{{ row.title }}</a></td>
+                    </tr>
+                {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-sm-6">
+            <h3>연애/스포츠</h3>
+            <table class="table table-hover" id="tbl_001" style="font-size:12px;font-family:굴림체;">
+                <colgroup>
+                    <col width="20"/>
+                    <col width="40"/>
+                    <col/>
+                </colgroup>
+                <tbody>
+                {%  for row in data.topic %}
+                {% if row.mode == 'sports' %}
+                    <tr>
+                        <td><span class="rank_number">{{ row.rank }}</span></td>
+                        <td><span class="rank_new">{{ row.new }}</span></td>
+                        <td><a href="{{ row.url }}" target="_blank">{{ row.title }}</a></td>
+                    </tr>
+                {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <div role="tabpanel" class="tab-pane" id="tab_002">
@@ -133,7 +156,7 @@
 </div>
 <script>
 $(document).ready(function() {
-    $("#tbl_001,#tbl_002,#tbl_003,#tbl_004").DataTable({
+    $("#tbl_002,#tbl_003,#tbl_004").DataTable({
         paging:false,
         //scrollY:400,
         searching: true,

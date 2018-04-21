@@ -1,8 +1,18 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+.rank_number {
+    display: block;
+    float: left;
+    min-width: 13px;
+    height: 12px;
+    margin-right: 9px;
+    border: 1px solid #e0e0e0;
+    color: #666;
+    line-height: 12px;
+    font-size: 11px;
+    text-align: center;
+    font-family: tahoma,sans-serif;
 }
-
-a {
-  color: #00B7FF;
+.rank_new {
+    font-family: verdana,sans-serif;
+    font-size: 10px;
+    color: #fb5151
 }

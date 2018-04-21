@@ -6,16 +6,30 @@ class NaverService:
     [A-01] 네이버 실시간 뉴스 토픽
     '''
     def getRealNewsTopicList(self):
+        list = []
+        # 01. 뉴스토픽
         html = Util.getHtml('http://news.naver.com/main/ranking/popularDay.nhn?mid=etc&sid1=111')
         ranks = html.find("ol", {"id":'newstopic_news'})
-        list = []
         for rank in ranks.find_all("li"):
             #print(rank)
             data = {
                 # href속성:Y / id속성:N / 빈공백제거
+                "mode"  : 'news',
                 "title" : rank.find("a", href=True, id=False).find("strong").get_text(" ", strip=True),
                 "rank"  : rank.find("a").find("em").get_text(),
-                "url"   : rank.a['href']
+                "url"   : rank.a['href'],
+                "new"   : rank.find("a").find("span",{"class":"rank2"}).get_text()
+            }
+            list.append(data)
+        # 02. 연애/스포츠
+        ranks = html.find("ol", {"id":'newstopic_entertain'})
+        for rank in ranks.find_all("li"):
+            data = {
+                "mode": 'sports',
+                "title" : rank.find("a", href=True, id=False).find("strong").get_text(" ", strip=True),
+                "rank"  : rank.find("a").find("em").get_text(),
+                "url"   : rank.a['href'],
+                "new"   : rank.find("a").find("span",{"class":"rank2"}).get_text()
             }
             list.append(data)
         return list
