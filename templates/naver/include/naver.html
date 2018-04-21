@@ -1,3 +1,9 @@
+{#
+JINJA2 템플릿 엔진
+- http://jinja.pocoo.org/
+- http://snacky.tistory.com/7
+#}
+
 <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#tab_001" aria-controls="tab_001" role="tab" data-toggle="tab">실시간 뉴스 토픽</a></li>
     <li role="presentation"><a href="#tab_002" aria-controls="tab_002" role="tab" data-toggle="tab">많이 본 뉴스:섹션</a></li>
@@ -7,6 +13,7 @@
 
 <div class="tab-content" style="padding-top:4px;">
     <div role="tabpanel" class="tab-pane active" id="tab_001">
+        {# 01-01. 토픽 - 뉴스 #}
         <div class="col-sm-6">
             <h3>뉴스 토픽</h3>
             <table class="table table-hover" id="tbl_001" style="font-size:12px;font-family:굴림체;">
@@ -28,7 +35,7 @@
                 </tbody>
             </table>
         </div>
-
+        {# 01-02. 토픽 - 연애/스포츠 #}
         <div class="col-sm-6">
             <h3>연애/스포츠</h3>
             <table class="table table-hover" id="tbl_001" style="font-size:12px;font-family:굴림체;">
@@ -38,7 +45,7 @@
                     <col/>
                 </colgroup>
                 <tbody>
-                {%  for row in data.topic %}
+                {% for row in data.topic %}
                 {% if row.mode == 'sports' %}
                     <tr>
                         <td><span class="rank_number">{{ row.rank }}</span></td>
@@ -52,10 +59,11 @@
         </div>
     </div>
 
+    {# 02. 많이 본 뉴스 - 섹션별 #}
     <div role="tabpanel" class="tab-pane" id="tab_002">
         <table class="table table-bordered table-hover table-striped display compact" id="tbl_002" width="100%" style="font-size:12px;font-family:굴림체;">
             <colgroup>
-                <col data-name="연령" width="70"/>
+                <col data-name="섹션" width="70"/>
                 <col data-name="순위" width="70"/>
                 <col data-name="제목" />
                 <col data-name="조회수" width="80"/>
@@ -75,9 +83,9 @@
                 {%  for rs in row.news %}
                 <tr>
                     <td>{{ row.title }}</td>
-                    <td>{{ rs.rank }}</td>
+                    <td><span class="rank_number">{{ rs.rank }}</span></td>
                     <td><a href="{{ rs.url }}" target="_blank">{{ rs.title }}</a></td>
-                    <td>{{ rs.count }}</td>
+                    <td><kbd class="_comma">{{ rs.count }}</kbd></td>
                     <td><img src="{{ rs.img }}" height="30" width="30"></td>
                 </tr>
                 {% endfor %}
@@ -95,6 +103,7 @@
         </table>
     </div>
 
+    {# 03. 많이 본 뉴스 - 성별 #}
     <div role="tabpanel" class="tab-pane" id="tab_003">
         <table class="table table-bordered table-hover table-striped" id="tbl_003" width="100%" style="font-size:12px;font-family:굴림체;">
             <colgroup>
@@ -118,9 +127,9 @@
                 {%  for rs in row.news %}
                 <tr>
                     <td>{{ row.title }}</td>
-                    <td>{{ rs.rank }}</td>
+                    <td><span class="rank_number">{{ rs.rank }}</span></td>
                     <td><a href="{{ rs.url }}" target="_blank">{{ rs.title }}</a></td>
-                    <td>{{ rs.count }}</td>
+                    <td><kbd class="_comma">{{ rs.count }}</kbd></td>
                     <td><img src="{{ rs.img }}" height="30" width="30"></td>
                 </tr>
                 {% endfor %}
@@ -129,33 +138,32 @@
         </table>
     </div>
 
+    {# 04. 많이 본 뉴스 - 연령별 #}
     <div role="tabpanel" class="tab-pane" id="tab_004">
         <table class="table table-bordered table-hover table-striped" id="tbl_004" width="100%" style="font-size:12px;font-family:굴림체;">
             <colgroup>
                 <col data-name="연령" width="80"/>
                 <col data-name="순위" width="70"/>
                 <col data-name="제목" />
-                <col data-name="조회수" width="80"/>
-                <col data-name="이미지" width="80"/>
             </colgroup>
             <thead>
                 <tr>
                     <th>연령</th>
                     <th>순위</th>
                     <th>제목</th>
-                    <th>조회수</th>
-                    <th>이미지</th>
                 </tr>
             </thead>
             <tbody>
-            {%  for row in data.age %}
+            {% for row in data.age %}
                 {%  for rs in row.news %}
                 <tr>
                     <td>{{ row.title }}</td>
-                    <td>{{ rs.rank }}</td>
-                    <td><a href="{{ rs.url }}" target="_blank">{{ rs.title }}</a></td>
-                    <td>{{ rs.count }}</td>
-                    <td><img src="{{ rs.img }}" height="30" width="30"></td>
+                    <td><span class="rank_number">{{ rs.rank }}</span></td>
+                    <td>
+                        <img src="{{ rs.img }}" height="30" width="30">
+                        <a href="{{ rs.url }}" target="_blank">{{ rs.title }}</a>
+                        <kbd class="_comma">{{ rs.count }}</kbd>
+                    </td>
                 </tr>
                 {% endfor %}
             {% endfor %}
@@ -163,6 +171,7 @@
         </table>
     </div>
 </div>
+
 <script>
 $(document).ready(function() {
     $("#tbl_003,#tbl_004").DataTable({
@@ -190,7 +199,7 @@ $(document).ready(function() {
                 width = rs.attr('width');
             }
         });
-        if( "순위-제목".indexOf(title) > -1 ) {
+        if( "섹션-순위-제목".indexOf(title) > -1 ) {
             $(this).html( '<input type="text" style="width:'+width+'px" class="form-control input-sm" placeholder="'+title+'" />' );
         }
     });
@@ -202,6 +211,11 @@ $(document).ready(function() {
             }
         } );
     });
+    // 조회수 콤마
+    $.each($("._comma"), function(idx, rs) {
+        rs = $(rs);
+        rs.text( Number(rs.text()).comma() );
+     });
 });
 
 $("#div_time").text("{{ data.date }}".substring(0,19));

@@ -71,6 +71,7 @@ Date.prototype.format = function(f) {
 
 String.prototype.string = function(len){var s = '', i = 0; while (i++ < len) { s += this; } return s;};
 String.prototype.zf = function(len){return "0".string(len - this.length) + this;};
-Number.prototype.zf = function(len){return this.toString().zf(len);};
 String.prototype.replaceAll = function(org,dest) {return this.split(org).join(dest);}
 String.prototype.trim = function() {return this.replace(/(^\s*)|(\s*$)/g, "");}
+Number.prototype.zf = function(len){return this.toString().zf(len);};
+Number.prototype.comma = function(){var regexp = /\B(?=(\d{3})+(?!\d))/g;return this.toString().replace(regexp, ',');}
