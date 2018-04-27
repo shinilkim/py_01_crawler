@@ -18,7 +18,7 @@ class NaverService:
                 "title" : rank.find("a", href=True, id=False).find("strong").get_text(" ", strip=True),
                 "rank"  : rank.find("a").find("em").get_text(),
                 "url"   : rank.a['href'],
-                "new"   : rank.find("a").find("span",{"class":"rank2"}).get_text()
+                "new"   : Util.getData(rank.find("a").find("span",{"class":"newstopic_ico_new"}))
             }
             list.append(data)
         # 02. 연애/스포츠
@@ -29,7 +29,7 @@ class NaverService:
                 "title" : rank.find("a", href=True, id=False).find("strong").get_text(" ", strip=True),
                 "rank"  : rank.find("a").find("em").get_text(),
                 "url"   : rank.a['href'],
-                "new"   : rank.find("a").find("span",{"class":"rank2"}).get_text()
+                "new"   : Util.getData(rank.find("a").find("span",{"class":"newstopic_ico_new"}).find("i"))
             }
             list.append(data)
         return list
@@ -125,12 +125,20 @@ class Util:
                 print(e)
         return news
 
+    @staticmethod
+    def getData(data):
+        if data is not None:
+            data = data.string
+        else:
+            data = ""
+        return data
+
 if __name__ == '__main__':
     naver = NaverService()
-    #print('[A-01] 네이버 실시간 뉴스 토픽'), print(naver.getRealNewsTopicList()), print()
+    print('[A-01] 네이버 실시간 뉴스 토픽'), print(naver.getRealNewsTopicList()), print()
     #print('[A-02] 많이 본 뉴스(섹션별)'), print(naver.getManySeeNewsSection())
     #print('[A-03] 많이 본 뉴스(남녀별)'), print(naver.getManySeeNewsSex())
-    print('[A-04] 많이 본 뉴스(연령별)'), print(naver.getManySeeNewsAge())
+    #print('[A-04] 많이 본 뉴스(연령별)'), print(naver.getManySeeNewsAge())
 
 '''
 https://www.crummy.com/software/BeautifulSoup/bs4/doc/

@@ -57,7 +57,8 @@ var myPage = {
             $("#div_main").load("/crawler/naver");
         }
         ,daum: function() {
-            myPage.view.reset('개발중입니다.');
+            myPage.view.reset("loadding...");
+            $("#div_main").load("/crawler/daum/daum");
         }
         ,reset: function(str) {
             if( !str ) str = "N/A";

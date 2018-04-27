@@ -1,0 +1,64 @@
+{#
+JINJA2 템플릿 엔진
+- http://jinja.pocoo.org/
+- http://snacky.tistory.com/7
+#}
+
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#tab_001" aria-controls="tab_001" role="tab" data-toggle="tab">실시간 이슈 검색어</a></li>
+</ul>
+
+<div class="tab-content" style="padding-top:4px;">
+    <div role="tabpanel" class="tab-pane active">
+        {# 01-01. 실시간 이슈 검색어 #}
+        <div class="col-sm-6">
+            <h3>실시간 이슈 검색어</h3>
+            <table class="table table-hover" id="daum_tbl_001" style="font-size:12px;font-family:굴림체;">
+                <thead></thead><tbody></tbody>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    //$.post("/api/daum?method=getRealSearchWordList", {name:'kim',age:41},function(data){});
+    myTable.create();
+});
+
+var myTable = {
+    tbl:{}
+    ,create: function() {
+        myTable.tbl = $('#daum_tbl_001').DataTable({
+            length:false,info:false,filter:false,paging:false,
+            "processing": true
+            ,"serverSide": false/*페이지 처리 여부*/
+            //,dom:'<"top"i>lft<"bottom"flp><"clear">', /* filter/length/info/paging/table */
+            ,"ajax": {
+                "url": "/api/daum?method=getRealSearchWordList",
+                "type" : 'POST',
+                "data": function ( d ) {
+                    //d.kind = $("#myTestList").val();
+                }
+            }
+            ,ordering:false
+            ,order:[[0,'desc']]
+            ,columns:[/*visible:false, targets:[3] */
+                {title:"순위", data:"rank", width:'80'},
+                {title:"검색어", data:null, width:'120',render:function(data,type,row){
+                    var word = "<a href='"+row.url+"' target='_blank' title='"+row.word+"'>"+row.word+"</a>";
+                    return word;
+                }},
+                {title:"상태", data:"status", width:'80'}
+            ]
+        });
+
+        $("#daum_tbl_001 > thead").hide();
+    }
+    ,search: function(str) {
+        myTable.tbl.search(str).draw();
+    }
+};
+</script>
