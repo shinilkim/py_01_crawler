@@ -12,7 +12,10 @@ JINJA2 템플릿 엔진
     <div role="tabpanel" class="tab-pane active">
         {# 01-01. 실시간 이슈 검색어 #}
         <div class="col-sm-6">
-            <h3>실시간 이슈 검색어</h3>
+            <h3>
+                실시간 이슈 검색어
+                <button class="btn btn-default btn-sm" onclick="myTable.reload()">재조회</button>
+            </h3>
             <table class="table table-hover" id="daum_tbl_001" style="font-size:12px;font-family:굴림체;">
                 <thead></thead><tbody></tbody>
             </table>
@@ -54,7 +57,7 @@ var myTable = {
                 }},
                 {title:"상태", data:"status", width:'80', render:function(data,type,row){
                     var status = row.status.replace("↑","<font color='red'><b>↑</b></font>");
-                    return status;
+                    return status.replace("신규진입","<font color='aaaaaa'>신규진입</font>");
                 }}
             ]
         });
@@ -66,8 +69,8 @@ var myTable = {
 
         $("#daum_tbl_001 > thead").hide();
     }
-    ,search: function(str) {
-        myTable.tbl.search(str).draw();
+    ,reload: function() {
+        myTable.tbl.ajax.reload();
     }
 };
 </script>
