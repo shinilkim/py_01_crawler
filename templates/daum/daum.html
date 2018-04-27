@@ -39,6 +39,7 @@ var myTable = {
             ,"ajax": {
                 "url": "/api/daum?method=getRealSearchWordList",
                 "type" : 'POST',
+                "dataSrc" : "list",
                 "data": function ( d ) {
                     //d.kind = $("#myTestList").val();
                 }
@@ -51,8 +52,16 @@ var myTable = {
                     var word = "<a href='"+row.url+"' target='_blank' title='"+row.word+"'>"+row.word+"</a>";
                     return word;
                 }},
-                {title:"상태", data:"status", width:'80'}
+                {title:"상태", data:"status", width:'80', render:function(data,type,row){
+                    var status = row.status.replace("↑","<font color='red'><b>↑</b></font>");
+                    return status;
+                }}
             ]
+        });
+
+        myTable.tbl.on('draw', function(e, settings){
+            //console.log(settings.json);
+            $("#div_time").html(settings.json.time);
         });
 
         $("#daum_tbl_001 > thead").hide();

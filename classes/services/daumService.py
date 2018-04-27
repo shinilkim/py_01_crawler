@@ -13,11 +13,11 @@ class DaumService:
         data = {
             "title" : ranks.find("h2",{"id":"liveIssueTitle"}).string,
             "time"  : ranks.find("span", class_='txt_standard').string.replace("기준", " 기준"),
-            "data"  : []
+            "list"  : []
         }
 
         for rank in ranks.find_all("div", {"class":"rank_cont", "aria-hidden":"true"}):
-            data['data'].append({
+            data['list'].append({
                 "rank" : rank.find_all("span",class_='ir_wa')[0].string,
                 "status" : rank.find_all("span",class_='ir_wa')[1].string,
                 "url" : rank.find("a").get('href'),
