@@ -29,8 +29,12 @@ class NaverService:
                 "title" : rank.find("a", href=True, id=False).find("strong").get_text(" ", strip=True),
                 "rank"  : rank.find("a").find("em").get_text(),
                 "url"   : rank.a['href'],
-                "new"   : Util.getData(rank.find("a").find("span",{"class":"newstopic_ico_new"}).find("i"))
+                "new"   : ""
             }
+            try:
+                data['new'] = Util.getData(rank.find("a").find("span",{"class":"newstopic_ico_new"}).find("i"))
+            except:
+                pass
             list.append(data)
         return list
     '''
