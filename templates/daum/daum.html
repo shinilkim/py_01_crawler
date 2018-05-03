@@ -16,7 +16,7 @@ JINJA2 템플릿 엔진
                 실시간 이슈 검색어
                 <button class="btn btn-default btn-sm" onclick="myTable.reload()">재조회</button>
             </h3>
-            <table class="table table-hover" id="daum_tbl_001" style="font-size:12px;font-family:굴림체;">
+            <table class="table table-hover" id="daum_tbl_001" style="font-size:12px;font-family:굴림체;" width="300px">
                 <thead></thead><tbody></tbody>
             </table>
         </div>
@@ -68,6 +68,7 @@ var myTable = {
         });
 
         $("#daum_tbl_001 > thead").hide();
+        $("#daum_tbl_001").width(270);
     }
     ,reload: function() {
         myTable.tbl.ajax.reload();
